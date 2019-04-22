@@ -41,12 +41,12 @@ export default new Router({
           path: "register",
           name: "register",
           component: Register
-        },
+        }
       ],
       beforeEnter: (to, from, next) => {
-        if(localStorage.token !== undefined) {
+        if (localStorage.token !== undefined) {
           next("/user");
-        }else {
+        } else {
           next();
         }
       }
@@ -86,7 +86,7 @@ export default new Router({
       beforeEnter: (to, from, next) => {
         if (localStorage.token === undefined) {
           next("/");
-        }else {
+        } else {
           next();
         }
       }

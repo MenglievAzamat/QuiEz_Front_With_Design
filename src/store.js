@@ -49,7 +49,7 @@ export default new Vuex.Store({
         })
         .then(response => {
           commit("setResponse", response.data.key);
-          localStorage.setItem("token", this.response);
+          localStorage.setItem("token", response.data.key);
         })
         .catch(error => {
           commit("setResponse", error);
@@ -57,11 +57,12 @@ export default new Vuex.Store({
           alert("Такого пользователя не существует!");
         });
     },
-    async getUserData({ state, commit }) {
-      return await axios.get("https://quiez-api.herokuapp.com/api/auth/user/?format=json")
-          .then(response => {
-            commit("setUserData", response.data);
-          });
+    async getUserData({ commit }) {
+      return await axios
+        .get("https://quiez-api.herokuapp.com/api/auth/user/?format=json")
+        .then(response => {
+          commit("setUserData", response.data);
+        });
     }
   }
 });

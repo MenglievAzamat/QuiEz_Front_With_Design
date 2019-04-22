@@ -10,17 +10,17 @@
                 <div class="navbar__left--logo">
                     <img src="../assets/name.png" alt="name">
                 </div>
-<!--                <v-btn flat round class="btn blue" to="/">Pass Test</v-btn>-->
+                <v-btn flat round class="btn blue" to="/">Pass Test</v-btn>
             </div>
             <div class="navbar__right">
-<!--                <v-btn flat round class="btn pink" to="/">Create Test</v-btn>-->
+                <v-btn flat round class="btn pink" to="/user/create-test">Create Test</v-btn>
                 <v-btn flat round class="btn pink" to="/logout">Sign Out</v-btn>
             </div>
         </div>
         <div class="body">
             <div class="account_info">
                 <div class="account_info__header">
-                    <h1>Welcome, {{ firstname + " " + lastname }}</h1>
+                    <h1>{{ text }}</h1>
                 </div>
                 <div class="divider"></div>
                 <div class="account_info__body">
@@ -51,23 +51,24 @@
         data() {
             return {
                 routes: [
-                    {label: 'Tests', route: '/user/tests'},
-                    {label: 'Create Test', route: '/user/create-test'}
+                    {label: 'Profile', route: '/user/tests'},
+                    {label: 'Settings', route: '/user/settings'}
                 ]
             }
         },
         computed: {
-            firstname: function() {
+            firstname: function () {
                 return "Azamat";
             },
             lastname: function() {
                 return "Mengliev";
+            },
+            text: function() {
+                return "Your account, " + this.firstname + " " + this.lastname;
             }
         },
         methods: {
-            test() {
-                this.$store.dispatch("getUserData");
-            }
+
         }
     };
 </script>
