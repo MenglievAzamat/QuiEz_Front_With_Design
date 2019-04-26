@@ -56,12 +56,15 @@
                 ]
             }
         },
+        beforeCreate() {
+            this.$store.dispatch("getUserData");
+        },
         computed: {
             firstname: function () {
-                return "Azamat";
+                return this.$store.state.user_data.first_name;
             },
             lastname: function() {
-                return "Mengliev";
+                return this.$store.state.user_data.last_name;
             },
             text: function() {
                 return "Your account, " + this.firstname + " " + this.lastname;
