@@ -10,6 +10,7 @@ import NavigationLogged from "./components/NavigationLogged";
 import AllTests from "./components/AllTests";
 import DoneTests from "./components/DoneTests";
 import CreateTest from "./components/CreateTest";
+import PassTest from "./components/PassTest";
 
 Vue.use(Router);
 
@@ -30,7 +31,7 @@ export default new Router({
           name: "login",
           component: Login,
           beforeEnter: (to, from, next) => {
-            if (localStorage.token !== undefined) {
+            if (sessionStorage.token !== undefined) {
               next("/");
             } else {
               next();
@@ -44,7 +45,7 @@ export default new Router({
         }
       ],
       beforeEnter: (to, from, next) => {
-        if (localStorage.token !== undefined) {
+        if (sessionStorage.token !== undefined) {
           next("/user");
         } else {
           next();
@@ -55,6 +56,11 @@ export default new Router({
       path: "/logout",
       name: "logout",
       component: Logout
+    },
+    {
+      path: "/test/:id",
+      name: "pass-test",
+      component: PassTest
     },
     {
       path: "/user",
@@ -84,7 +90,7 @@ export default new Router({
         }
       ],
       beforeEnter: (to, from, next) => {
-        if (localStorage.token === undefined) {
+        if (sessionStorage.token === undefined) {
           next("/");
         } else {
           next();

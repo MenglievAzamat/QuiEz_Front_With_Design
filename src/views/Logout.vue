@@ -8,7 +8,7 @@
     export default {
         name: "Logout",
         created() {
-            localStorage.removeItem('token');
+            sessionStorage.removeItem('token');
             this.$router.push("/");
             location.reload();
         }

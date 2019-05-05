@@ -12,7 +12,7 @@
             </router-link>
             <router-link to="/user/tests/done">
                 <div class="item done">
-                    Done Tests
+                    My Tests
                 </div>
             </router-link>
         </div>
@@ -86,7 +86,7 @@
 
         &__content {
             width: 100%;
-            height: 25.375rem;
+            min-height: 25.375rem;
             background: #f2f2f2;
             margin-top: .5rem;
             box-shadow: inset 0 3px 5px 0 #777;

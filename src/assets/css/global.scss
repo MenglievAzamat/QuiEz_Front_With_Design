@@ -8,6 +8,10 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   font-family: Righteous, sans-serif;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 }
 
 html {

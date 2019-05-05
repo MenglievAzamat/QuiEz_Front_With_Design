@@ -10,7 +10,6 @@
                 <div class="navbar__left--logo">
                     <img src="../assets/name.png" alt="name">
                 </div>
-                <v-btn flat round class="btn blue" to="/">Pass Test</v-btn>
             </div>
             <div class="navbar__right">
                 <v-btn flat round class="btn pink" to="/user/create-test">Create Test</v-btn>
@@ -51,8 +50,7 @@
         data() {
             return {
                 routes: [
-                    {label: 'Profile', route: '/user/tests'},
-                    {label: 'Settings', route: '/user/settings'}
+                    {label: 'Profile', route: '/user/tests'}
                 ]
             }
         },
@@ -158,20 +156,20 @@
 
     .body {
         width: 100%;
-        height: 38.625rem;
+        min-height: 38.625rem;
         padding: .5rem 1rem 1rem 1rem;
         display: flex;
         justify-content: space-between;
 
         .account_info {
             width: 42.875rem;
-            height: 37.125rem;
+            min-height: 37.125rem;
             background: #fff;
             box-shadow: 0 8px 10px -3px lightgrey;
 
             &__header {
                 width: 100%;
-                height: 3.625rem;
+                min-height: 3.625rem;
                 background-color: $lighter-blue;
                 text-align: center;
                 padding: .9rem 0;
@@ -191,7 +189,7 @@
 
             &__body {
                 width: 100%;
-                height: 32.61rem;
+                min-height: 32.61rem;
                 padding: .875rem;
 
                 &--header {

@@ -1,7 +1,23 @@
 <template>
     <div class="container">
-        All
-        {{resp}}
+        <table>
+            <thead>
+            <tr>
+                <td>Name</td>
+                <td>Test Owner</td>
+                <td>Description</td>
+            </tr>
+            </thead>
+            <tbody>
+            {{resp}}
+            <tr v-for="row in resp">
+                <td>{{ row.name }}</td>
+                <td>{{ row.owner.first_name + " " + row.owner.last_name}}</td>
+                <td>{{ row.description }}</td>
+                <td style="border: none"><v-btn color="green white--text" :to="'/test/' + row.id">Pass Test</v-btn></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -9,12 +25,36 @@
     export default {
         name: "AllTests",
         beforeCreate() {
-          this.$store.dispatch("getAllTests");
+            this.$store.dispatch("getAllTests");
         },
         computed: {
-            resp: function() {
+            resp: function () {
                 return this.$store.state.test_data;
             }
         }
     }
 </script>
+
+<style scoped lang="scss">
+    @import "../assets/css/colors.scss";
+
+    .container {
+        table {
+            thead {
+                td {
+                    background: $lighter-blue;
+                    border: .125rem solid black;
+                    font-weight: bold;
+                }
+            }
+
+            td {
+                padding: .5rem;
+                width: 16.66666%;
+                border: .0625rem solid black;
+                box-sizing: border-box;
+                font-weight: 100;
+            }
+        }
+    }
+</style>
