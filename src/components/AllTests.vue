@@ -9,12 +9,11 @@
             </tr>
             </thead>
             <tbody>
-            {{resp}}
             <tr v-for="row in resp">
                 <td>{{ row.name }}</td>
                 <td>{{ row.owner.first_name + " " + row.owner.last_name}}</td>
                 <td>{{ row.description }}</td>
-                <td style="border: none"><v-btn color="green white--text" :to="'/test/' + row.id">Pass Test</v-btn></td>
+                <td style="border: none"><v-btn color="green white--text" :to="'/test/' + row.id" v-if="row.owner.email !== owner.email">Pass Test</v-btn></td>
             </tr>
             </tbody>
         </table>
@@ -30,6 +29,10 @@
         computed: {
             resp: function () {
                 return this.$store.state.test_data;
+            },
+
+            owner: function() {
+                return this.$store.state.user_data;
             }
         }
     }

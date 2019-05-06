@@ -319,6 +319,7 @@
 
             submitTest: function () {
                 this.$store.dispatch("createTest", this.data);
+                this.$router.push("/");
             }
         }
     }

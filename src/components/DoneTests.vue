@@ -9,10 +9,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="row in resp">
+            <tr v-for="(row, key) in resp">
                 <td>{{ row.name }}</td>
                 <td>{{ row.description }}</td>
                 <td>{{ row.date_creation }}</td>
+                <td><v-btn :disabled="disabledOpen[key]" color="green white--text" @click="openTest(row.id)">Open</v-btn><v-btn :disabled="disabledClose[key]" color="red white--text" @click="closeTest(row.id)">Close</v-btn></td>
             </tr>
             </tbody>
         </table>
@@ -24,9 +25,9 @@
         name: "DoneTests",
         computed: {
             resp: function() {
-                var userid = this.$store.state.user_data.id;
-                var data = this.$store.state.test_data;
-                var arr = [];
+                let userid = this.$store.state.user_data.id;
+                let data = this.$store.state.test_data;
+                let arr = [];
 
                 for(let row of data) {
                     if(row.owner.id === userid) {
@@ -35,6 +36,35 @@
                 }
 
                 return arr;
+            },
+
+            disabledOpen: function() {
+                let result = [];
+
+                for(let date of this.resp) {
+                    result.push(date.date_open !== null);
+                }
+
+                return result;
+            },
+
+            disabledClose: function() {
+                let result = [];
+
+                for(let date of this.resp) {
+                    result.push(date.date_close !== null);
+                }
+
+                return result;
+            }
+        },
+        methods: {
+            openTest: function(id) {
+                this.$store.dispatch("openTest", id);
+            },
+
+            closeTest: function(id) {
+                this.$store.dispatch("closeTest", id);
             }
         }
     }

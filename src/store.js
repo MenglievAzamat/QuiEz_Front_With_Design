@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     user_data: [],
     test_data: [],
+    current_test: [],
     response: "",
     baseLoginUrl: "https://quiez-api.herokuapp.com/api/auth/login/",
     baseRegisterUrl:
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     setTestData(state, resp) {
       state.test_data = resp;
+    },
+    setCurrentTest(state, resp) {
+      state.current_test = resp;
     }
   },
   actions: {
@@ -43,6 +47,7 @@ export default new Vuex.Store({
           alert("Пользователь уже зарегистрирован!");
         });
     },
+
     async login({ state, commit }, data) {
       return await axios
         .post(state.baseLoginUrl, JSON.stringify(data), {
@@ -61,6 +66,7 @@ export default new Vuex.Store({
           alert("Такого пользователя не существует!");
         });
     },
+
     async getUserData({ commit }) {
       return await axios
         .get(
@@ -76,6 +82,7 @@ export default new Vuex.Store({
           commit("setUserData", response.data);
         });
     },
+
     async getAllTests({ commit }) {
       return await axios
         .get(
@@ -92,6 +99,7 @@ export default new Vuex.Store({
           commit("setTestData", response.data);
         });
     },
+
     async createTest({commit}, data) {
       return await axios.post("https://quiez-api.herokuapp.com/api/test/?format=json", JSON.stringify(data), {
         headers: {
@@ -101,10 +109,65 @@ export default new Vuex.Store({
         }
       }).then(response => {
         alert("Success");
-        this.$router.push("#/");
       }).catch(error => {
-        alert(error);
+        alert("Something went wrong!");
       });
+    },
+
+    async openTest({commit}, data) {
+      return await axios.post("https://quiez-api.herokuapp.com/api/test/" + data + "/open/",  null, {
+        headers: {
+          Authorization: "Token " + sessionStorage.token,
+          Accept: "application/json"
+        }
+      }).then(response => {
+        alert("Successfully opened!");
+        location.reload();
+      }).catch(error => {
+        alert("This test is already opened!");
+      })
+    },
+
+    async closeTest({commit}, data) {
+      return await axios.post("https://quiez-api.herokuapp.com/api/test/" + data + "/close/",  null, {
+        headers: {
+          Authorization: "Token " + sessionStorage.token,
+          Accept: "application/json"
+        }
+      }).then(response => {
+        alert("Closed successfully!");
+        location.reload();
+      }).catch(error => {
+        alert("This test is not opened yet!")
+      })
+    },
+
+    async startTest({commit}, id) {
+      return await axios.get("https://quiez-api.herokuapp.com/api/test/" + id + "/", {
+        headers: {
+          Authorization: "Token " + sessionStorage.token,
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      }).then(response =>  {
+        commit("setCurrentTest", response.data);
+      }).catch(error => {
+        console.error(error);
+      });
+    },
+
+    async submitTest({commit}, data) {
+      return await axios.post("https://quiez-api.herokuapp.com/api/test/" + data[0] + "/submit/?format=json", JSON.stringify(data[1]), {
+        headers: {
+          Authorization: "Token " + sessionStorage.token,
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      }).then(response => {
+        alert(JSON.stringify(response))
+      }).catch(error => {
+        console.error(error);
+      })
     }
   }
 });
