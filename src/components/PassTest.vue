@@ -46,7 +46,7 @@
                     </v-btn>
 
                     <div class="text-xs-center" v-if="response.questions.length === numbers.length">
-                        <v-btn color="red white--text" @click="submitTest" round>Finish Test</v-btn>
+                        <v-btn color="red white--text" style="margin-top: 1rem;" @click="submitTest" round>Finish Test</v-btn>
                     </div>
                 </div>
             </div>
@@ -108,15 +108,15 @@
             this.$store.dispatch("startTest", this.$route.params.id);
             let result = this.$store.state.current_test;
 
-            if (result.date_open === null) {
+            if (result.date_open !== null) {
+                if (result.date_close !== null) {
+                    alert("This test is closed!");
+                    this.$router.push("/");
+                }
+            } else {
                 alert("This test is not opened yet!");
                 this.$router.push("/");
-            } else if (result.date_close !== null) {
-                alert("This test is closed!");
-                this.$router.push("/");
             }
-
-            window.scrollY = 0;
         },
         computed: {
             test: function () {
@@ -179,6 +179,8 @@
                     id: this.current_question.id,
                     answers: this.answers
                 });
+
+                this.nextSlide();
             },
 
             answerText: function (event) {
@@ -220,6 +222,7 @@
 
                 this.$store.dispatch("submitTest", data)
                     .then(() => {
+                        this.$router.push("/");
                         },
                         (error) => {
                             console.error(error)
@@ -344,7 +347,7 @@
         }
 
         .slides {
-            width: 45.75rem;
+            width: 100%;
             background: white;
             margin: 1.25rem auto 2rem;
             box-shadow: inset 0 .25rem .3rem 0 rgba(black, .3);
@@ -389,7 +392,7 @@
                     flex-wrap: wrap;
 
                     button {
-                        width: 48.7%;
+                        width: 48.6%;
                         height: 3rem;
                         font-size: 1rem;
                         color: #333;

@@ -13,7 +13,7 @@
                 <td>{{ row.name }}</td>
                 <td>{{ row.owner.first_name + " " + row.owner.last_name}}</td>
                 <td>{{ row.description }}</td>
-                <td style="border: none"><v-btn color="green white--text" :to="'/test/' + row.id" v-if="row.owner.email !== owner.email && row.date_close === null">Pass Test</v-btn></td>
+                <td style="border: none"><v-btn color="light-blue white--text" :to="'/test/' + row.id + '/result/' + owner.id" v-if="row.date_close !== null">Overview</v-btn></td>
             </tr>
             </tbody>
         </table>
@@ -22,9 +22,10 @@
 
 <script>
     export default {
-        name: "AllTests",
+        name: "PassedTests",
         beforeCreate() {
-            this.$store.dispatch("getAllTests");
+            let id = this.$store.state.user_data.id;
+            this.$store.dispatch("getPassedTests", id);
         },
         computed: {
             resp: function () {

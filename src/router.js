@@ -11,6 +11,8 @@ import AllTests from "./components/AllTests";
 import DoneTests from "./components/DoneTests";
 import CreateTest from "./components/CreateTest";
 import PassTest from "./components/PassTest";
+import PassedTests from "./components/PassedTests";
+import UserTestOverview from "./components/UserTestOverview";
 
 Vue.use(Router);
 
@@ -58,9 +60,21 @@ export default new Router({
       component: Logout
     },
     {
-      path: "/test/:id",
-      name: "pass-test",
-      component: PassTest
+      path: "/test",
+      name: "test",
+      component: NavigationLogged,
+      children: [
+        {
+          path: ":id",
+          name: "pass-test",
+          component: PassTest
+        },
+        {
+          path: ":testid/result/:userid",
+          name: "review-test",
+          component: UserTestOverview
+        },
+      ]
     },
     {
       path: "/user",
@@ -80,6 +94,11 @@ export default new Router({
               path: "done",
               name: "done",
               component: DoneTests
+            },
+            {
+              path: "passed",
+              name: "passed",
+              component: PassedTests
             }
           ]
         },

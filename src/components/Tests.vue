@@ -15,6 +15,11 @@
                     My Tests
                 </div>
             </router-link>
+            <router-link to="/user/tests/passed">
+                <div class="item done">
+                    Passed Tests
+                </div>
+            </router-link>
         </div>
         <div class="profile_body__content">
             <router-view></router-view>
@@ -73,6 +78,7 @@
                     &.done {
                         width: 10.1875rem;
                         background: $lighter-blue;
+                        margin-right: .6875rem;
                     }
                 }
 

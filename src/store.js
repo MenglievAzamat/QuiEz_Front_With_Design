@@ -8,7 +8,9 @@ export default new Vuex.Store({
   state: {
     user_data: [],
     test_data: [],
+    passed_tests: [],
     current_test: [],
+    passed_test_result: [],
     response: "",
     baseLoginUrl: "https://quiez-api.herokuapp.com/api/auth/login/",
     baseRegisterUrl:
@@ -26,6 +28,12 @@ export default new Vuex.Store({
     },
     setCurrentTest(state, resp) {
       state.current_test = resp;
+    },
+    setPassedTests(state, resp) {
+      state.passed_tests = resp;
+    },
+    setPassedTestResult(state, resp) {
+      state.passed_test_result = resp;
     }
   },
   actions: {
@@ -100,6 +108,23 @@ export default new Vuex.Store({
         });
     },
 
+    async getPassedTests({ commit }, id) {
+      return await axios
+          .get(
+              "https://cors-anywhere.herokuapp.com/quiez-api.herokuapp.com/api/test/submission/" + id + "/?format=json",
+              {
+                headers: {
+                  Authorization: "Token " + sessionStorage.token,
+                  Accept: "application/json",
+                  "Content-Type": "application/json"
+                }
+              }
+          )
+          .then(response => {
+            commit("setTestData", response.data);
+          });
+    },
+
     async createTest({commit}, data) {
       return await axios.post("https://quiez-api.herokuapp.com/api/test/?format=json", JSON.stringify(data), {
         headers: {
@@ -132,7 +157,8 @@ export default new Vuex.Store({
       return await axios.post("https://quiez-api.herokuapp.com/api/test/" + data + "/close/",  null, {
         headers: {
           Authorization: "Token " + sessionStorage.token,
-          Accept: "application/json"
+          Accept: "application/json",
+          "Content-Type": "application/json"
         }
       }).then(response => {
         alert("Closed successfully!");
@@ -165,6 +191,20 @@ export default new Vuex.Store({
         }
       }).then(response => {
         alert(JSON.stringify(response))
+      }).catch(error => {
+        console.error(error);
+      })
+    },
+
+    async getTestResult({commit}, data) {
+      return await axios.get("https://quiez-api.herokuapp.com/api/test/" + data[0] + "/result/" + data[1] + "/?format=json", {
+        headers: {
+          Authorization: "Token " + sessionStorage.token,
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      }).then(response => {
+        commit("setPassedTestResult", response.data);
       }).catch(error => {
         console.error(error);
       })
